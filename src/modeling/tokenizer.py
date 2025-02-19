@@ -1,4 +1,5 @@
-import tensorflow as tf
+from itertools import islice
+from loguru import logger
 import tensorflow_datasets as tfds
 import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer  # type: ignore
@@ -6,6 +7,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict
 import pandas as pd
+from src.utils import CustomEncoder
 
 
 def load_imdb_dataset() -> List[str]:
@@ -15,7 +17,7 @@ def load_imdb_dataset() -> List[str]:
         "imdb_reviews", split=["train", "test"], as_supervised=True, with_info=True
     )
 
-    # Combine train and test texts
+    # NOTE: Combine train and test texts
     texts = []
     for dataset in [ds_train, ds_test]:
         for text, _ in tfds.as_numpy(dataset):
@@ -32,7 +34,9 @@ def create_char_tokenizer(
     # Create character-level tokenizer
     char_tokenizer = Tokenizer(num_words=num_words, char_level=True)
     char_tokenizer.fit_on_texts(texts)
-
+    logger.info(
+        f"char_tokenizer.word_index: {dict(islice(char_tokenizer.word_index.items(), 10))}..."
+    )
     # Analyze character-level statistics
     stats = {
         "vocab_size": len(char_tokenizer.word_index) + 1,
@@ -50,7 +54,9 @@ def create_word_tokenizer(
     # Create word-level tokenizer
     word_tokenizer = Tokenizer(num_words=num_words, char_level=False)
     word_tokenizer.fit_on_texts(texts)
-
+    logger.info(
+        f"word_tokenizer.word_index: {dict(islice(word_tokenizer.word_index.items(), 10))}..."
+    )
     # Analyze word-level statistics
     all_words = " ".join(texts).split()
     stats = {
@@ -67,10 +73,9 @@ def analyze_sequence_lengths(
 ) -> Dict:
     """Analyze sequence lengths for both tokenization approaches."""
     # Get sequences
-    char_sequences = char_tokenizer.texts_to_sequences(
-        texts[:1000]
-    )  # Sample for efficiency
-    word_sequences = word_tokenizer.texts_to_sequences(texts[:1000])
+    # NOTE: process all texts in the list
+    char_sequences = char_tokenizer.texts_to_sequences(texts)
+    word_sequences = word_tokenizer.texts_to_sequences(texts)
 
     # Calculate lengths
     char_lengths = [len(seq) for seq in char_sequences]
@@ -154,6 +159,9 @@ def visualize_comparisons(char_stats: Dict, word_stats: Dict, length_stats: Dict
 
 
 def main():
+    import json
+    from pathlib import Path
+
     # Load dataset
     texts = load_imdb_dataset()
 
@@ -183,15 +191,29 @@ def main():
     print("\nCreating visualizations...")
     fig = visualize_comparisons(char_stats, word_stats, length_stats)
 
-    return {
-        "char_tokenizer": char_tokenizer,
-        "word_tokenizer": word_tokenizer,
+    results = {
         "char_stats": char_stats,
         "word_stats": word_stats,
         "length_stats": length_stats,
-        "figure": fig,
     }
+
+    # save the stats to json file, and figure to png file
+    stats_file = (
+        Path(__file__).resolve().parents[2] / "reports" / "tokenizer_stats.json"
+    )
+    with open(stats_file, "w") as f:
+        json.dump(results, f, cls=CustomEncoder, indent=4)
+    print(f"Results saved to {stats_file}")
+
+    fig_file = (
+        Path(__file__).resolve().parents[2]
+        / "reports"
+        / "figures"
+        / "tokenizer_stats.png"
+    )
+    fig.savefig(fig_file)
+    print(f"Figure saved to {fig_file}")
 
 
 if __name__ == "__main__":
-    results = main()
+    main()

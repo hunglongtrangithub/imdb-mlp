@@ -1,5 +1,26 @@
 import tensorflow as tf
 import numpy as np
+import json
+
+
+class CustomEncoder(json.JSONEncoder):
+    """Custom encoder for NumPy data types to make them JSON serializable."""
+
+    def default(self, o):
+        if isinstance(o, np.ndarray):
+            return o.tolist()  # Convert arrays to lists
+        elif isinstance(
+            o, (np.int_, np.intc, np.intp, np.int8, np.int16, np.int32, np.int64)
+        ):
+            return int(o)  # Convert NumPy integers to Python int
+        elif isinstance(o, (np.float16, np.float32, np.float64)):
+            return float(o)  # Convert NumPy floats to Python float
+        elif isinstance(o, (np.bool_)):
+            return bool(o)  # Convert NumPy boolean to Python bool
+        if isinstance(o, set):
+            return list(o)  # Convert sets to lists
+        else:
+            return super().default(o)  # Default behavior for other types
 
 
 def char_level_tokenizer(texts, num_words=None):

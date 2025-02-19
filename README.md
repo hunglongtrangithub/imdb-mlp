@@ -21,14 +21,14 @@
 
 - [x] **Load Dataset:**  
        Load your dataset into the notebook.
-- [ ] **Tokenization:**
+- [x] **Tokenization:**
   - **Character-Level Tokenization:**
     - Tokenize the text data at the character level.
     - Save and log the processed data.
   - **Word-Level Tokenization:**
     - Modify the tokenization process to tokenize the text by words.
     - Save and log the processed data.
-- [ ] **Comparison:**
+- [x] **Comparison:**
   - Create a section in your notebook to compare the two tokenization approaches.
   - Visualize or tabulate differences in vocabulary size, sequence lengths, and other relevant metrics.
 
@@ -111,3 +111,41 @@
 
 > **Note:**  
 > Keep thorough logs and document any observations during your experiments. Clear documentation is key to reproducibility and understanding your results.
+
+## Submission Details:
+
+### Tokenizer Word Level vs Character Level
+
+Logs:
+
+```
+Loaded 50000 text samples
+
+Creating tokenizers...
+2025-02-19 09:37:41.983 | INFO     | __main__:create_char_tokenizer:37 - char_tokenizer.word_index: {' ': 1, 'e': 2, 't': 3, 'a': 4, 'i': 5, 'o': 6, 's': 7, 'n': 8, 'r': 9, 'h': 10}...
+2025-02-19 09:37:53.565 | INFO     | __main__:create_word_tokenizer:57 - word_tokenizer.word_index: {'the': 1, 'and': 2, 'a': 3, 'of': 4, 'to': 5, 'is': 6, 'br': 7, 'in': 8, 'it': 9, 'i': 10}...
+
+Analyzing sequence lengths...
+
+Tokenization Comparison:
+--------------------------------------------------
+Character-level vocabulary size: 163
+Word-level vocabulary size: 124253
+
+Sequence Length Statistics:
+Character-level:
+  mean: 1309.43
+  median: 970.00
+  min: 32.00
+  max: 13704.00
+
+Word-level:
+  mean: 235.03
+  median: 176.00
+  min: 6.00
+  max: 2493.00
+
+Creating visualizations...
+Results saved to /home/80026129/PROJECTS/learning/NLP_01/reports/tokenizer_stats.json
+Figure saved to /home/80026129/PROJECTS/learning/NLP_01/reports/figures/tokenizer_stats.png
+```
