@@ -10,6 +10,7 @@ import random
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
+from src.utils import save_to_json
 
 
 @dataclass
@@ -46,8 +47,7 @@ class ExperimentTracker:
 
         # Save to file
         exp_path = self.base_path / f"experiment_{timestamp}.json"
-        with open(exp_path, "w") as f:
-            json.dump(experiment, f, indent=2)
+        save_to_json(experiment, exp_path)
 
     def get_results_df(self) -> pd.DataFrame:
         """Convert experiment log to DataFrame"""

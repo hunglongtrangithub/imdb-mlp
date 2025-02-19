@@ -7,7 +7,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict
 import pandas as pd
-from src.utils import CustomEncoder
+from src.utils import save_to_json
 
 
 def load_imdb_dataset() -> List[str]:
@@ -201,8 +201,7 @@ def main():
     stats_file = (
         Path(__file__).resolve().parents[2] / "reports" / "tokenizer_stats.json"
     )
-    with open(stats_file, "w") as f:
-        json.dump(results, f, cls=CustomEncoder, indent=4)
+    save_to_json(results, stats_file)
     print(f"Results saved to {stats_file}")
 
     fig_file = (

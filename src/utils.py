@@ -23,6 +23,12 @@ class CustomEncoder(json.JSONEncoder):
             return super().default(o)  # Default behavior for other types
 
 
+def save_to_json(data, filename):
+    """Save data to a JSON file using the custom encoder."""
+    with open(filename, "w") as f:
+        json.dump(data, f, cls=CustomEncoder, indent=4)
+
+
 def char_level_tokenizer(texts, num_words=None):
     """
     Create and fit a character-level tokenizer.
