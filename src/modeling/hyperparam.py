@@ -182,6 +182,8 @@ def train_imdb_with_config(
 
 
 def main():
+    # add logger to file
+    logger.add("hyperparam.log")
     results = {}
     # Define search space for IMDB experiments
     search_space = {
@@ -233,9 +235,25 @@ def main():
             y_train=y_train,
             X_val=X_val,
             y_val=y_val,
-            num_configs=1,  # Number of random configurations to try
+            num_configs=5,  # Number of random configurations to try
         )
         logger.info("Random search completed.")
+
+        # # Run grid search
+        # logger.info(
+        #     "Data preprocessed. Starting hyperparameter optimization: grid search"
+        # )
+        # optimizer.grid_search(
+        #     train_fn=lambda config, X_train, y_train, X_val, y_val: train_imdb_with_config(
+        #         config, X_train, y_train, X_val, y_val
+        #     ),
+        #     X_train=X_train,
+        #     y_train=y_train,
+        #     X_val=X_val,
+        #     y_val=y_val,
+        # )
+        # logger.info("Grid search completed.")
+
         # Get and print best configuration
         best_config, best_stats = optimizer.get_best_config(metric="val_accuracy")
         print("Best configuration:", best_config)
