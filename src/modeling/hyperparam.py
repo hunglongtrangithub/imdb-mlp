@@ -104,7 +104,7 @@ class HyperParameterOptimizer:
 
     def get_best_config(
         self, metric: str = "val_accuracy"
-    ) -> Tuple[IMDBExperimentConfig, Dict[str, float]]:
+    ) -> Tuple[pd.DataFrame, IMDBExperimentConfig, Dict[str, float]]:
         """Get the best performing configuration"""
         df = self.tracker.get_results_df()
 
@@ -124,7 +124,7 @@ class HyperParameterOptimizer:
         )
 
         # Find best configuration
-        best_idx = stats_df[metric]["mean"].idxmax()
+        best_idx = stats_df[metric]["mean"].idxmax()  # type: ignore
         # Extract plain values from pandas Series
         best_config_dict = {
             col: stats_df.loc[best_idx, col].item() for col in config_cols
@@ -132,6 +132,7 @@ class HyperParameterOptimizer:
         logger.info(f"Best configuration: {best_config_dict}")
 
         return (
+            stats_df,
             IMDBExperimentConfig(**best_config_dict, random_seed=0),
             {
                 f"{metric}_mean": stats_df.loc[best_idx, (metric, "mean")],
@@ -228,9 +229,11 @@ def main():
         )
         # Run random search
         optimizer.random_search(
-            train_fn=lambda config, X_train, y_train, X_val, y_val: train_imdb_with_config(
-                config, X_train, y_train, X_val, y_val
-            ),
+            train_fn=lambda config,
+            X_train,
+            y_train,
+            X_val,
+            y_val: train_imdb_with_config(config, X_train, y_train, X_val, y_val),
             X_train=X_train,
             y_train=y_train,
             X_val=X_val,
@@ -240,23 +243,37 @@ def main():
         logger.info("Random search completed.")
 
         # Get and print best configuration
-        best_config, best_stats = optimizer.get_best_config(metric="val_accuracy")
+        stats_df, best_config, best_stats = optimizer.get_best_config(
+            metric="val_accuracy"
+        )
         print("Best configuration:", best_config)
         print("Best validation performance:", best_stats)
         sub_results["best_config"] = best_config.__dict__
         sub_results["best_stats"] = best_stats
 
-        # Save results df to file
-        results_df = optimizer.tracker.get_results_df()
-        results_file = (
-            Path(__file__).resolve().parents[2] / "reports" / "hyperparam_results.csv"
+        # Save stats df to file    
+        stats_file = (
+            Path(__file__).resolve().parents[2] / "reports" / f"{token_level}_hyperparam_stats.csv"
         )
+        stats_df.to_csv(stats_file, index=False)
+        sub_results["stats_file"] = str(stats_file)
+
+        # Save results to file
+        results_file = (
+            Path(__file__).resolve().parents[2] / "reports" / f"{token_level}_hyperparam_results.json"
+        )
+        results_df = optimizer.tracker.get_results_df()
         results_df.to_csv(results_file, index=False)
         sub_results["results_file"] = str(results_file)
 
         # Plot results
         fig = optimizer.plot_results(metric="val_accuracy")
-        fig_file = Path(__file__).resolve().parents[2] / "reports" / "figures" / "hyperparam_results.png"
+        fig_file = (
+            Path(__file__).resolve().parents[2]
+            / "reports"
+            / "figures"
+            / f"{token_level}_hyperparam_results.png"
+        )
         fig.savefig(fig_file)
         sub_results["fig_file"] = str(fig_file)
         logger.info("Training final model with best configuration...")
@@ -266,7 +283,7 @@ def main():
         final_model, test_metrics = final_trainer.train(
             X_train, y_train, X_val, y_val, X_test, y_test
         )
-
+        logger.info(f"Final model trained: {final_model}")
         print("\nFinal Test Set Performance:")
         print(f"Test Accuracy: {test_metrics['accuracy']:.4f}")
         print(f"Test Precision: {test_metrics['precision']:.4f}")
