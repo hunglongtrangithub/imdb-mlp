@@ -125,15 +125,11 @@ class HyperParameterOptimizer:
 
         # Find best configuration
         best_idx = stats_df[metric]["mean"].idxmax()
-        best_config_dict = {col: stats_df.loc[best_idx, col] for col in config_cols}
-
-        # Get all results for this configuration
-        best_results = df[
-            df[config_cols].apply(
-                lambda x: all(x == best_config_dict.get(i) for i, v in x.items()),
-                axis=1,
-            )
-        ]
+        # Extract plain values from pandas Series
+        best_config_dict = {
+            col: stats_df.loc[best_idx, col].item() for col in config_cols
+        }
+        logger.info(f"Best configuration: {best_config_dict}")
 
         return (
             IMDBExperimentConfig(**best_config_dict, random_seed=0),
@@ -153,10 +149,6 @@ class HyperParameterOptimizer:
         # 1. Learning rate vs metric
         sns.boxplot(data=df, x="learning_rate", y=metric, ax=axs[0, 0])
         axs[0, 0].set_title(f"Learning Rate vs {metric}")
-
-        # 2. Hidden layers vs metric
-        sns.boxplot(data=df, x="num_hidden_layers", y=metric, ax=axs[0, 1])
-        axs[0, 1].set_title(f"Number of Hidden Layers vs {metric}")
 
         # 3. Optimizer vs metric
         sns.boxplot(data=df, x="optimizer", y=metric, ax=axs[1, 0])
@@ -216,7 +208,7 @@ def main():
             (val_texts, val_labels),
             (test_texts, test_labels),
         ) = IMDBTrainer.load_data()
-        logger.info(f"test_labels: {test_labels}")
+        logger.debug(f"test_labels: {test_labels}")
         logger.info("Preprocessing data...")
         (X_train, y_train), (X_val, y_val), (X_test, y_test) = (
             IMDBTrainer.preprocess_data(
@@ -241,7 +233,7 @@ def main():
             y_train=y_train,
             X_val=X_val,
             y_val=y_val,
-            num_configs=5,  # Number of random configurations to try
+            num_configs=1,  # Number of random configurations to try
         )
         logger.info("Random search completed.")
         # Get and print best configuration
@@ -255,7 +247,7 @@ def main():
         optimizer.plot_results(metric="val_accuracy")
         logger.info("Training final model with best configuration...")
         # Train final model with best configuration
-        final_trainer = IMDBTrainer(IMDBExperimentConfig(**best_config))
+        final_trainer = IMDBTrainer(best_config)
         final_model, test_metrics = final_trainer.train(
             X_train, y_train, X_val, y_val, X_test, y_test
         )

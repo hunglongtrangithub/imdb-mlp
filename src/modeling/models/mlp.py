@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+from loguru import logger
 
 from src.utils import char_level_tokenizer, texts_to_bow, one_hot_encode
 
@@ -35,6 +36,9 @@ class MLP(object):
         self.activation = activation
 
         # Initialize weights and biases for first hidden layer
+        logger.debug(
+            f"self.size_input: {self.size_input}, {type(self.size_input)}. self.size_hidden1: {self.size_hidden1}, {type(self.size_hidden1)}"
+        )
         self.W1 = tf.Variable(
             tf.random.normal([self.size_input, self.size_hidden1], stddev=0.1)
         )

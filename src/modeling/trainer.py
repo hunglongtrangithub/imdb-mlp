@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from typing import Any
-
 import random
+
+from loguru import logger
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import numpy as np
@@ -170,6 +170,7 @@ class IMDBTrainer:
         # )
 
         # Setup model
+        logger.debug(f"X_train.shape[1]: {X_train.shape[1]}, {type(X_train.shape[1])}")
         model, optimizer = self.setup_model(X_train.shape[1])
 
         # Training loop
