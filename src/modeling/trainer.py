@@ -1,20 +1,40 @@
+from dataclasses import dataclass
+from typing import Any
+
+import random
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score, recall_score
 
-from src.utils import char_level_tokenizer, texts_to_bow, one_hot_encode
+from src.utils import texts_to_bow, one_hot_encode
+from src.modeling.models.mlp import MLP
+
+
+@dataclass
+class IMDBExperimentConfig:
+    """Configuration for IMDB sentiment analysis experiments"""
+
+    learning_rate: float
+    batch_size: int
+    epochs: int
+    hidden_size1: int
+    hidden_size2: int
+    optimizer: str
+    activation: str
+    random_seed: int
 
 
 class IMDBTrainer:
-    def __init__(self, model_class, batch_size=128, epochs=10, learning_rate=0.001):
-        self.model_class = model_class
-        self.batch_size = batch_size
-        self.epochs = epochs
-        self.learning_rate = learning_rate
+    def __init__(self, config: IMDBExperimentConfig):
+        self.config = config
+        # Set random seeds
+        tf.random.set_seed(config.random_seed)
+        np.random.seed(config.random_seed)
+        random.seed(config.random_seed)
 
-    def load_data(self):
+    def load_data():
         """Load and prepare IMDB dataset"""
         print("Loading IMDB dataset...")
         (ds_train, ds_test), _ = tfds.load(
@@ -22,13 +42,13 @@ class IMDBTrainer:
         )
 
         # Process training data
-        train_texts, train_labels = self._process_dataset(ds_train)
+        train_texts, train_labels = IMDBTrainer._process_dataset(ds_train)
         train_texts, val_texts, train_labels, val_labels = train_test_split(
             train_texts, train_labels, test_size=0.2, random_state=42
         )
 
         # Process test data
-        test_texts, test_labels = self._process_dataset(ds_test)
+        test_texts, test_labels = IMDBTrainer._process_dataset(ds_test)
 
         print(
             f"Train samples: {len(train_texts)}, "
@@ -42,7 +62,7 @@ class IMDBTrainer:
             (test_texts, test_labels),
         )
 
-    def _process_dataset(self, dataset):
+    def _process_dataset(dataset):
         """Convert dataset to lists of texts and labels"""
         texts, labels = [], []
         for text, label in tfds.as_numpy(dataset):
@@ -51,10 +71,17 @@ class IMDBTrainer:
         return texts, np.array(labels)
 
     def preprocess_data(
-        self, train_texts, val_texts, test_texts, train_labels, val_labels, test_labels
+        is_char_level,
+        train_texts,
+        val_texts,
+        test_texts,
+        train_labels,
+        val_labels,
+        test_labels,
     ):
         """Tokenize and vectorize the data"""
-        tokenizer = char_level_tokenizer(train_texts)
+        tokenizer = tf.keras.preprocessing.text.Tokenizer(char_level=is_char_level)
+        tokenizer.fit_on_texts(train_texts)
         print("Tokenizer vocabulary size:", len(tokenizer.word_index) + 1)
 
         # Convert texts to BOW representation
@@ -71,15 +98,29 @@ class IMDBTrainer:
 
     def setup_model(self, input_size):
         """Initialize model and optimizer"""
-        model = self.model_class(
+        model = MLP(
             size_input=input_size,
-            size_hidden1=128,
-            size_hidden2=64,
-            size_hidden3=32,  # Placeholder (not used in forward pass)
+            size_hidden1=self.config.hidden_size1,
+            size_hidden2=self.config.hidden_size2,
             size_output=2,
+            activation=self.config.activation,
             device=None,
         )
-        optimizer = tf.keras.optimizers.Adam(learning_rate=self.learning_rate)
+
+        # Set optimizer based on config
+        if self.config.optimizer.lower() == "adam":
+            optimizer = tf.keras.optimizers.Adam(
+                learning_rate=self.config.learning_rate
+            )
+        elif self.config.optimizer.lower() == "sgd":
+            optimizer = tf.keras.optimizers.SGD(learning_rate=self.config.learning_rate)
+        elif self.config.optimizer.lower() == "rmsprop":
+            optimizer = tf.keras.optimizers.RMSprop(
+                learning_rate=self.config.learning_rate
+            )
+        else:
+            raise ValueError(f"Unsupported optimizer: {self.config.optimizer}")
+
         return model, optimizer
 
     def train_epoch(self, model, optimizer, X_train, y_train):
@@ -89,12 +130,12 @@ class IMDBTrainer:
         X_train = X_train[indices]
         y_train = y_train[indices]
 
-        num_batches = int(np.ceil(X_train.shape[0] / self.batch_size))
+        num_batches = int(np.ceil(X_train.shape[0] / self.config.batch_size))
         epoch_loss = 0
 
         for i in range(num_batches):
-            start = i * self.batch_size
-            end = min((i + 1) * self.batch_size, X_train.shape[0])
+            start = i * self.config.batch_size
+            end = min((i + 1) * self.config.batch_size, X_train.shape[0])
             X_batch = X_train[start:end]
             y_batch = y_train[start:end]
 
@@ -120,20 +161,20 @@ class IMDBTrainer:
             "recall": recall_score(true_vals, preds),
         }
 
-    def train(self):
-        """Main training loop"""
-        # Load and preprocess data
-        train_data, val_data, test_data = self.load_data()
-        (X_train, y_train), (X_val, y_val), (X_test, y_test) = self.preprocess_data(
-            *train_data, *val_data, *test_data
-        )
+    def train(self, X_train, y_train, X_val, y_val, X_test=None, y_test=None):
+        """Main training loop. Return test metrics if provided, else validation metrics"""
+        # # Load and preprocess data
+        # train_data, val_data, test_data = self.load_data()
+        # (X_train, y_train), (X_val, y_val), (X_test, y_test) = self.preprocess_data(
+        #     *train_data, *val_data, *test_data
+        # )
 
         # Setup model
         model, optimizer = self.setup_model(X_train.shape[1])
 
         # Training loop
         print("\nStarting training...\n")
-        for epoch in range(self.epochs):
+        for epoch in range(self.config.epochs):
             epoch_loss = self.train_epoch(model, optimizer, X_train, y_train)
             val_metrics = self.evaluate(model, X_val, y_val)
 
@@ -146,21 +187,16 @@ class IMDBTrainer:
                 f"Recall: {val_metrics['recall']:.4f}"
             )
 
-        # Final evaluation
-        print("\nEvaluating on test set...")
-        test_metrics = self.evaluate(model, X_test, y_test)
-        print(
-            f"Test Loss: {test_metrics['loss']:.4f} | "
-            f"Test Accuracy: {test_metrics['accuracy']:.4f} | "
-            f"Test Precision: {test_metrics['precision']:.4f} | "
-            f"Test Recall: {test_metrics['recall']:.4f}"
-        )
+        if X_test is not None or y_test is not None:
+            # Final evaluation
+            print("\nEvaluating on test set...")
+            test_metrics = self.evaluate(model, X_test, y_test)
+            print(
+                f"Test Loss: {test_metrics['loss']:.4f} | "
+                f"Test Accuracy: {test_metrics['accuracy']:.4f} | "
+                f"Test Precision: {test_metrics['precision']:.4f} | "
+                f"Test Recall: {test_metrics['recall']:.4f}"
+            )
+            return model, test_metrics
 
-        return model, test_metrics
-
-
-# Usage example:
-def train_imdb(model_class):
-    trainer = IMDBTrainer(model_class)
-    model, metrics = trainer.train()
-    return model, metrics
+        return model, val_metrics

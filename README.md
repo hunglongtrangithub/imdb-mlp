@@ -34,7 +34,7 @@
 
 ## 3. Model Architecture
 
-- [ ] **Define the Model:**  
+- [x] **Define the Model:**  
        Develop a model (or models) that can handle both tokenization types. Include the following adjustable hyper-parameters:
   - Learning rate
   - Number of hidden layers
@@ -45,9 +45,9 @@
 
 ## 4. Hyper-Parameter Optimization
 
-- [ ] **Experiment Setup:**  
+- [x] **Experiment Setup:**  
        For each hyper-parameter configuration, perform at least 3 different tests to ensure robustness.
-- [ ] **Grid/Random Search:**  
+- [x] **Grid/Random Search:**  
        Set up a search over the following hyper-parameter ranges (example values provided):
   - **Learning Rate:** `[0.001, 0.0005, 0.0001]`
   - **Hidden Layers:** `[1, 2, 3]`
@@ -55,7 +55,7 @@
   - **Batch Sizes:** `[32, 64, 128]`
   - **Optimizers:** `[Adam, SGD, RMSProp]`
   - **Activation Functions:** `[ReLU, Tanh, LeakyReLU]`
-- [ ] **Logging:**  
+- [x] **Logging:**  
        Record the results (accuracy, loss, etc.) for each configuration in tables or charts.
 
 ## 5. Model Training and Evaluation

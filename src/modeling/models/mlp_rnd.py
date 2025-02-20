@@ -7,8 +7,8 @@ class MLP_rnd(object):
         size_input,
         size_hidden1,
         size_hidden2,
-        size_hidden3,
         size_output,
+        activation="relu",
         device=None,
     ):
         """
@@ -22,9 +22,9 @@ class MLP_rnd(object):
         self.size_input = size_input
         self.size_hidden1 = size_hidden1
         self.size_hidden2 = size_hidden2
-        self.size_hidden3 = size_hidden3  # (Currently not used in the forward pass)
         self.size_output = size_output
         self.device = device
+        self.activation = activation
 
         # Initialize weights and biases for first hidden layer
         self.W1 = tf.Variable(
@@ -82,6 +82,19 @@ class MLP_rnd(object):
         grads = tape.gradient(current_loss, self.variables)
         return grads
 
+    def activate(self, X):
+        """
+        Activation function.
+        """
+        if self.activation == "relu":
+            return tf.nn.relu(X)
+        elif self.activation == "leaky_relu":
+            return tf.nn.leaky_relu(X)
+        elif self.activation == "tanh":
+            return tf.nn.tanh(X)
+        else:
+            raise ValueError("Unknown activation function")
+
     def compute_output(self, X):
         """
         Custom method to compute the output tensor during the forward pass.
@@ -90,10 +103,10 @@ class MLP_rnd(object):
         X_tf = tf.cast(X, dtype=tf.float32)
         # First hidden layer
         h1 = tf.matmul(X_tf, self.W1) + self.b1
-        z1 = tf.nn.relu(h1)
+        z1 = self.activate(h1)
         # Second hidden layer
         h2 = tf.matmul(z1, self.W2) + self.b2
-        z2 = tf.nn.relu(h2)
+        z2 = self.activate(h2)
         # Output layer (logits)
         output = tf.matmul(z2, self.W3) + self.b3
         return output

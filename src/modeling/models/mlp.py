@@ -16,24 +16,23 @@ class MLP(object):
         size_input,
         size_hidden1,
         size_hidden2,
-        size_hidden3,
         size_output,
+        activation="relu",
         device=None,
     ):
         """
         size_input: int, size of input layer
         size_hidden1: int, size of the 1st hidden layer
         size_hidden2: int, size of the 2nd hidden layer
-        size_hidden3: int, size of the 3rd hidden layer (not used in compute_output here)
         size_output: int, size of output layer
         device: str or None, either 'cpu' or 'gpu' or None.
         """
         self.size_input = size_input
         self.size_hidden1 = size_hidden1
         self.size_hidden2 = size_hidden2
-        self.size_hidden3 = size_hidden3  # (Currently not used in the forward pass)
         self.size_output = size_output
         self.device = device
+        self.activation = activation
 
         # Initialize weights and biases for first hidden layer
         self.W1 = tf.Variable(
@@ -90,6 +89,20 @@ class MLP(object):
         grads = tape.gradient(current_loss, self.variables)
         return grads
 
+    def activate(self, x):
+        """
+        Activation function.
+        x: Tensor.
+        """
+        if self.activation == "relu":
+            return tf.nn.relu(x)
+        elif self.activation == "tanh":
+            return tf.nn.tanh(x)
+        elif self.activation == "leaky_relu":
+            return tf.nn.leaky_relu(x)
+        else:
+            raise ValueError("Invalid activation function.")
+
     def compute_output(self, X):
         """
         Custom method to compute the output tensor during the forward pass.
@@ -98,10 +111,10 @@ class MLP(object):
         X_tf = tf.cast(X, dtype=tf.float32)
         # First hidden layer
         h1 = tf.matmul(X_tf, self.W1) + self.b1
-        z1 = tf.nn.relu(h1)
+        z1 = self.activate(h1)
         # Second hidden layer
         h2 = tf.matmul(z1, self.W2) + self.b2
-        z2 = tf.nn.relu(h2)
+        z2 = self.activate(h2)
         # Output layer (logits)
         output = tf.matmul(z2, self.W3) + self.b3
         return output
@@ -339,15 +352,11 @@ def test_mlp():
     size_input = X.shape[1]
     size_hidden1 = 64
     size_hidden2 = 32
-    size_hidden3 = (
-        16  # Not used in compute_output (placeholder for a potential extra layer)
-    )
+
     size_output = 2
 
     # Instantiate the MLP model.
-    model = MLP(
-        size_input, size_hidden1, size_hidden2, size_hidden3, size_output, device=None
-    )
+    model = MLP(size_input, size_hidden1, size_hidden2, size_output, device=None)
 
     # Define an optimizer.
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.01)

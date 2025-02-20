@@ -7,24 +7,23 @@ class MLP_FA(object):
         size_input,
         size_hidden1,
         size_hidden2,
-        size_hidden3,
         size_output,
+        activation="relu",
         device=None,
     ):
         """
         size_input: int, size of input layer
         size_hidden1: int, size of the 1st hidden layer
         size_hidden2: int, size of the 2nd hidden layer
-        size_hidden3: int, size of the 3rd hidden layer (Note: Not used in compute_output in this example)
         size_output: int, size of output layer
         device: str or None, either 'cpu' or 'gpu' or None.
         """
         self.size_input = size_input
         self.size_hidden1 = size_hidden1
         self.size_hidden2 = size_hidden2
-        self.size_hidden3 = size_hidden3  # (Currently not used)
         self.size_output = size_output
         self.device = device
+        self.activation = activation
 
         # Initialize weights and biases for first hidden layer
         self.W1 = tf.Variable(
@@ -84,6 +83,20 @@ class MLP_FA(object):
         loss_x = cce(y_true_tf, y_pred_tf)
         return loss_x
 
+    def activate(self, x):
+        """
+        Activation function.
+        x: Tensor, input to the activation function.
+        """
+        if self.activation == "relu":
+            return tf.nn.relu(x)
+        elif self.activation == "tanh":
+            return tf.nn.tanh(x)
+        elif self.activation == "leaky_relu":
+            return tf.nn.leaky_relu(x)
+        else:
+            raise ValueError(f"Activation function {self.activation} not supported.")
+
     def backward(self, X_train, y_train):
         """
         Backward pass using feedback alignment.
@@ -98,10 +111,10 @@ class MLP_FA(object):
         # --- Forward Pass ---
         # First hidden layer
         h1 = tf.matmul(X_tf, self.W1) + self.b1
-        a1 = tf.nn.relu(h1)
+        a1 = self.activate(h1)
         # Second hidden layer
         h2 = tf.matmul(a1, self.W2) + self.b2
-        a2 = tf.nn.relu(h2)
+        a2 = self.activate(h2)
         # Output layer (logits)
         logits = tf.matmul(a2, self.W3) + self.b3
         # Softmax predictions
@@ -146,8 +159,8 @@ class MLP_FA(object):
         """
         X_tf = tf.cast(X, dtype=tf.float32)
         h1 = tf.matmul(X_tf, self.W1) + self.b1
-        z1 = tf.nn.relu(h1)
+        z1 = self.activate(h1)
         h2 = tf.matmul(z1, self.W2) + self.b2
-        z2 = tf.nn.relu(h2)
+        z2 = self.activate(h2)
         output = tf.matmul(z2, self.W3) + self.b3
         return output

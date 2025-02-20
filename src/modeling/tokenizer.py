@@ -159,7 +159,6 @@ def visualize_comparisons(char_stats: Dict, word_stats: Dict, length_stats: Dict
 
 
 def main():
-    import json
     from pathlib import Path
 
     # Load dataset

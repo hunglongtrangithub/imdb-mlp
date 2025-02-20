@@ -1,30 +1,18 @@
-import tensorflow as tf
-import numpy as np
-from dataclasses import dataclass
 from typing import List, Dict, Any, Tuple
 from itertools import product
+from pathlib import Path
+
+import tensorflow as tf
+import numpy as np
 import pandas as pd
 from datetime import datetime
-import json
 import random
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pathlib import Path
+from loguru import logger
+
 from src.utils import save_to_json
-
-
-@dataclass
-class ExperimentConfig:
-    """Configuration for a single experiment"""
-
-    learning_rate: float
-    num_hidden_layers: int
-    hidden_sizes: List[int]
-    batch_size: int
-    optimizer: str
-    activation: str
-    tokenization: str  # 'char' or 'word'
-    random_seed: int
+from src.modeling.trainer import IMDBTrainer, IMDBExperimentConfig
 
 
 class ExperimentTracker:
@@ -35,7 +23,7 @@ class ExperimentTracker:
         self.base_path.mkdir(exist_ok=True)
         self.experiment_log = []
 
-    def log_experiment(self, config: ExperimentConfig, results: Dict[str, float]):
+    def log_experiment(self, config: IMDBExperimentConfig, results: Dict[str, float]):
         """Log a single experiment run"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         experiment = {
@@ -74,7 +62,7 @@ class HyperParameterOptimizer:
         for config_dict in configurations:
             for seed in range(self.num_trials):
                 # Create experiment config
-                config = ExperimentConfig(**config_dict, random_seed=seed)
+                config = IMDBExperimentConfig(**config_dict, random_seed=seed)
 
                 # Run experiment
                 results = self._run_experiment(
@@ -86,6 +74,7 @@ class HyperParameterOptimizer:
 
     def random_search(self, train_fn, X_train, y_train, X_val, y_val, num_configs: int):
         """Perform random search over hyperparameter space"""
+        random.seed(0)
         for _ in range(num_configs):
             # Randomly sample configuration
             config_dict = {
@@ -93,7 +82,7 @@ class HyperParameterOptimizer:
             }
 
             for seed in range(self.num_trials):
-                config = ExperimentConfig(**config_dict, random_seed=seed)
+                config = IMDBExperimentConfig(**config_dict, random_seed=seed)
 
                 results = self._run_experiment(
                     config, train_fn, X_train, y_train, X_val, y_val
@@ -102,20 +91,20 @@ class HyperParameterOptimizer:
                 self.tracker.log_experiment(config, results)
 
     def _run_experiment(
-        self, config: ExperimentConfig, train_fn, X_train, y_train, X_val, y_val
+        self, config: IMDBExperimentConfig, train_fn, X_train, y_train, X_val, y_val
     ) -> Dict[str, float]:
         """Run a single experiment with given configuration"""
         # Set random seeds
         tf.random.set_seed(config.random_seed)
         np.random.seed(config.random_seed)
         random.seed(config.random_seed)
-
+        logger.info(f"Running experiment with config: {config.__dict__}")
         # Train model and get results
         return train_fn(config, X_train, y_train, X_val, y_val)
 
     def get_best_config(
         self, metric: str = "val_accuracy"
-    ) -> Tuple[ExperimentConfig, Dict[str, float]]:
+    ) -> Tuple[IMDBExperimentConfig, Dict[str, float]]:
         """Get the best performing configuration"""
         df = self.tracker.get_results_df()
 
@@ -147,7 +136,7 @@ class HyperParameterOptimizer:
         ]
 
         return (
-            ExperimentConfig(**best_config_dict, random_seed=0),
+            IMDBExperimentConfig(**best_config_dict, random_seed=0),
             {
                 f"{metric}_mean": stats_df.loc[best_idx, (metric, "mean")],
                 f"{metric}_std": stats_df.loc[best_idx, (metric, "std")],
@@ -181,50 +170,110 @@ class HyperParameterOptimizer:
         return fig
 
 
-# Example usage:
-def main():
-    # Define search space
-    search_space = {
-        "learning_rate": [0.001, 0.0005, 0.0001],
-        "num_hidden_layers": [1, 2, 3],
-        "hidden_sizes": [128, 256, 512],
-        "batch_size": [32, 64, 128],
-        "optimizer": ["adam", "sgd", "rmsprop"],
-        "activation": ["relu", "tanh", "leaky_relu"],
-        "tokenization": ["char", "word"],
+def train_imdb_with_config(
+    config: IMDBExperimentConfig, X_train, y_train, X_val, y_val
+):
+    """Training function wrapper for hyperparameter optimization"""
+    # Initialize trainer with config
+    trainer = IMDBTrainer(config)
+
+    # Train the model and get metrics
+    _, metrics = trainer.train(X_train, y_train, X_val, y_val)
+
+    # Return metrics in the format expected by HyperParameterOptimizer
+    return {
+        "val_loss": metrics["loss"],
+        "val_accuracy": metrics["accuracy"],
+        "val_precision": metrics["precision"],
+        "val_recall": metrics["recall"],
     }
 
-    # Initialize optimizer
-    optimizer = HyperParameterOptimizer(search_space, num_trials=3)
 
-    # Define training function
-    def train_and_evaluate(config, X_train, y_train, X_val, y_val):
-        # Create and train model using config...
-        # Return metrics
-        return {
-            "train_loss": 0.5,
-            "train_accuracy": 0.85,
-            "val_loss": 0.6,
-            "val_accuracy": 0.82,
-        }
+def main():
+    results = {}
+    # Define search space for IMDB experiments
+    search_space = {
+        "learning_rate": [0.001, 0.0005, 0.0001],
+        "batch_size": [32, 64, 128],
+        "epochs": [5, 10],
+        "hidden_size1": [128, 256, 512],
+        "hidden_size2": [128, 256, 512],
+        "optimizer": ["adam", "sgd", "rmsprop"],
+        "activation": ["relu", "tanh", "leaky_relu"],
+    }
+    results["search_space"] = search_space
+    logger.info(f"Search space: {search_space}")
+    for token_level in ["char_level", "word_level"]:
+        logger.info(f"Token level: {token_level}")
+        sub_results = {}
+        # Initialize optimizer with fewer trials for demonstration
+        optimizer = HyperParameterOptimizer(search_space)
 
-    # Perform grid search
-    optimizer.grid_search(
-        train_and_evaluate,
-        X_train=None,  # Add your data
-        y_train=None,
-        X_val=None,
-        y_val=None,
+        # Load and preprocess data once
+        is_char_level = token_level == "char_level"
+        (
+            (train_texts, train_labels),
+            (val_texts, val_labels),
+            (test_texts, test_labels),
+        ) = IMDBTrainer.load_data()
+        logger.info(f"test_labels: {test_labels}")
+        logger.info("Preprocessing data...")
+        (X_train, y_train), (X_val, y_val), (X_test, y_test) = (
+            IMDBTrainer.preprocess_data(
+                is_char_level,
+                train_texts,
+                val_texts,
+                test_texts,
+                train_labels,
+                val_labels,
+                test_labels,
+            )
+        )
+        logger.info(
+            "Data preprocessed. Starting hyperparameter optimization: random search"
+        )
+        # Run random search
+        optimizer.random_search(
+            train_fn=lambda config, X_train, y_train, X_val, y_val: train_imdb_with_config(
+                config, X_train, y_train, X_val, y_val
+            ),
+            X_train=X_train,
+            y_train=y_train,
+            X_val=X_val,
+            y_val=y_val,
+            num_configs=5,  # Number of random configurations to try
+        )
+        logger.info("Random search completed.")
+        # Get and print best configuration
+        best_config, best_stats = optimizer.get_best_config(metric="val_accuracy")
+        print("Best configuration:", best_config)
+        print("Best validation performance:", best_stats)
+        sub_results["best_config"] = best_config.__dict__
+        sub_results["best_stats"] = best_stats
+
+        # Plot results
+        optimizer.plot_results(metric="val_accuracy")
+        logger.info("Training final model with best configuration...")
+        # Train final model with best configuration
+        final_trainer = IMDBTrainer(IMDBExperimentConfig(**best_config))
+        final_model, test_metrics = final_trainer.train(
+            X_train, y_train, X_val, y_val, X_test, y_test
+        )
+
+        print("\nFinal Test Set Performance:")
+        print(f"Test Accuracy: {test_metrics['accuracy']:.4f}")
+        print(f"Test Precision: {test_metrics['precision']:.4f}")
+        print(f"Test Recall: {test_metrics['recall']:.4f}")
+        sub_results["test_metrics"] = test_metrics
+
+        results[token_level] = sub_results
+
+    logger.info("Saving results to file...")
+    # Save results
+    results_file = (
+        Path(__file__).resolve().parents[2] / "reports" / "hyperparam_results.json"
     )
-
-    # Get best configuration
-    best_config, best_stats = optimizer.get_best_config()
-    print("Best configuration:", best_config)
-    print("Performance statistics:", best_stats)
-
-    # Plot results
-    fig = optimizer.plot_results()
-    plt.show()
+    save_to_json(results, results_file)
 
 
 if __name__ == "__main__":
