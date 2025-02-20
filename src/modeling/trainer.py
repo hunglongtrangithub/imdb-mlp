@@ -4,6 +4,7 @@ import random
 from loguru import logger
 import tensorflow as tf
 import tensorflow_datasets as tfds
+from tensorflow import keras  # type: ignore
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score, recall_score
@@ -34,10 +35,11 @@ class IMDBTrainer:
         np.random.seed(config.random_seed)
         random.seed(config.random_seed)
 
+    @staticmethod
     def load_data():
         """Load and prepare IMDB dataset"""
         print("Loading IMDB dataset...")
-        (ds_train, ds_test), _ = tfds.load(
+        (ds_train, ds_test), _ = tfds.load(  # type: ignore
             "imdb_reviews", split=["train", "test"], as_supervised=True, with_info=True
         )
 
@@ -62,6 +64,7 @@ class IMDBTrainer:
             (test_texts, test_labels),
         )
 
+    @staticmethod
     def _process_dataset(dataset):
         """Convert dataset to lists of texts and labels"""
         texts, labels = [], []
@@ -70,6 +73,7 @@ class IMDBTrainer:
             labels.append(label)
         return texts, np.array(labels)
 
+    @staticmethod
     def preprocess_data(
         is_char_level,
         train_texts,
@@ -80,7 +84,7 @@ class IMDBTrainer:
         test_labels,
     ):
         """Tokenize and vectorize the data"""
-        tokenizer = tf.keras.preprocessing.text.Tokenizer(char_level=is_char_level)
+        tokenizer = keras.preprocessing.text.Tokenizer(char_level=is_char_level)
         tokenizer.fit_on_texts(train_texts)
         print("Tokenizer vocabulary size:", len(tokenizer.word_index) + 1)
 
@@ -109,13 +113,11 @@ class IMDBTrainer:
 
         # Set optimizer based on config
         if self.config.optimizer.lower() == "adam":
-            optimizer = tf.keras.optimizers.Adam(
-                learning_rate=self.config.learning_rate
-            )
+            optimizer = keras.optimizers.Adam(learning_rate=self.config.learning_rate)
         elif self.config.optimizer.lower() == "sgd":
-            optimizer = tf.keras.optimizers.SGD(learning_rate=self.config.learning_rate)
+            optimizer = keras.optimizers.SGD(learning_rate=self.config.learning_rate)
         elif self.config.optimizer.lower() == "rmsprop":
-            optimizer = tf.keras.optimizers.RMSprop(
+            optimizer = keras.optimizers.RMSprop(
                 learning_rate=self.config.learning_rate
             )
         else:
@@ -175,6 +177,7 @@ class IMDBTrainer:
 
         # Training loop
         print("\nStarting training...\n")
+        val_metrics = {}
         for epoch in range(self.config.epochs):
             epoch_loss = self.train_epoch(model, optimizer, X_train, y_train)
             val_metrics = self.evaluate(model, X_val, y_val)
