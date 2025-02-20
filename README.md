@@ -1,5 +1,3 @@
-==the MLP class definitions at the first and second code cells are the same.==
-
 # Assignment 2 Todos
 
 ## Overview
@@ -60,26 +58,26 @@
 
 ## 5. Model Training and Evaluation
 
-- [ ] **Training with Each Configuration:**  
+- [x] **Training with Each Configuration:**  
        Run experiments for both tokenization approaches with each set of hyper-parameters:
   - Train the model at least 3 times per configuration (keeping the seed constant at this stage).
   - Log training and validation performance.
-- [ ] **Identify the Best Model:**  
+- [x] **Identify the Best Model:**  
        Select the best performing configuration based on validation metrics (e.g., accuracy).
 
 ## 6. Final Experiments
 
-- [ ] **Robustness Check:**  
+- [x] **Robustness Check:**  
        Once the best model is identified:
   - Re-run the experiments at least 3 times with different random seeds.
   - Record the performance (accuracy) for each run.
-- [ ] **Statistical Reporting:**
+- [x] **Statistical Reporting:**
   - Compute the **mean accuracy** and **standard error** across these runs.
   - Include these statistics in your report.
 
 ## 7. Documentation and Reporting
 
-- [ ] **Jupyter Notebook:**
+- [x] **Jupyter Notebook:**
   - Ensure that your notebook is well-commented and clearly documents each step.
   - Include code cells for setting seeds, data preprocessing, model building, training, evaluation, and visualization.
 - [ ] **Detailed Report (Word Document):**  
@@ -99,12 +97,12 @@
 
 ## 8. Final Checklist
 
-- [ ] All experiments have at least 3 different tests.
-- [ ] Random seeds are set before any experiment.
-- [ ] Hyper-parameter optimization covers changes in learning rate, hidden layers, hidden sizes, batch sizes, optimizers, and activation functions.
-- [ ] The best model’s performance is verified with experiments on different seeds.
-- [ ] Best model should be compared with random model shown above.
-- [ ] The report clearly documents the methodology, experiments, results, and final conclusions.
+- [x] All experiments have at least 3 different tests.
+- [x] Random seeds are set before any experiment.
+- [x] Hyper-parameter optimization covers changes in learning rate, hidden layers, hidden sizes, batch sizes, optimizers, and activation functions.
+- [x] The best model’s performance is verified with experiments on different seeds.
+- [x] Best model should be compared with random model shown above.
+- [x] The report clearly documents the methodology, experiments, results, and final conclusions.
 - [ ] If experiments are shown with deeper MLP_FA with best settings (Extra credits -- 2 points)
 
 ---

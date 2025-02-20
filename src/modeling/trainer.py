@@ -28,8 +28,9 @@ class IMDBExperimentConfig:
 
 
 class IMDBTrainer:
-    def __init__(self, config: IMDBExperimentConfig):
+    def __init__(self, config: IMDBExperimentConfig, model_class=MLP):
         self.config = config
+        self.model_class = model_class
         # Set random seeds
         tf.random.set_seed(config.random_seed)
         np.random.seed(config.random_seed)
@@ -102,7 +103,7 @@ class IMDBTrainer:
 
     def setup_model(self, input_size):
         """Initialize model and optimizer"""
-        model = MLP(
+        model = self.model_class(
             size_input=input_size,
             size_hidden1=self.config.hidden_size1,
             size_hidden2=self.config.hidden_size2,
