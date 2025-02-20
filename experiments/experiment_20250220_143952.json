@@ -1,0 +1,19 @@
+{
+    "timestamp": "20250220_143952",
+    "config": {
+        "learning_rate": 0.001,
+        "batch_size": 32,
+        "epochs": 5,
+        "hidden_size1": 256,
+        "hidden_size2": 128,
+        "optimizer": "rmsprop",
+        "activation": "leaky_relu",
+        "random_seed": 2
+    },
+    "results": {
+        "val_loss": 0.887094259262085,
+        "val_accuracy": 0.8712,
+        "val_precision": 0.8503937007874016,
+        "val_recall": 0.8910891089108911
+    }
+}

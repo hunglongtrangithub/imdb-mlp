@@ -235,24 +235,9 @@ def main():
             y_train=y_train,
             X_val=X_val,
             y_val=y_val,
-            num_configs=5,  # Number of random configurations to try
+            num_configs=10,  # Number of random configurations to try
         )
         logger.info("Random search completed.")
-
-        # # Run grid search
-        # logger.info(
-        #     "Data preprocessed. Starting hyperparameter optimization: grid search"
-        # )
-        # optimizer.grid_search(
-        #     train_fn=lambda config, X_train, y_train, X_val, y_val: train_imdb_with_config(
-        #         config, X_train, y_train, X_val, y_val
-        #     ),
-        #     X_train=X_train,
-        #     y_train=y_train,
-        #     X_val=X_val,
-        #     y_val=y_val,
-        # )
-        # logger.info("Grid search completed.")
 
         # Get and print best configuration
         best_config, best_stats = optimizer.get_best_config(metric="val_accuracy")
@@ -261,9 +246,21 @@ def main():
         sub_results["best_config"] = best_config.__dict__
         sub_results["best_stats"] = best_stats
 
+        # Save results df to file
+        results_df = optimizer.tracker.get_results_df()
+        results_file = (
+            Path(__file__).resolve().parents[2] / "reports" / "hyperparam_results.csv"
+        )
+        results_df.to_csv(results_file, index=False)
+        sub_results["results_file"] = str(results_file)
+
         # Plot results
-        optimizer.plot_results(metric="val_accuracy")
+        fig = optimizer.plot_results(metric="val_accuracy")
+        fig_file = Path(__file__).resolve().parents[2] / "reports" / "figures" / "hyperparam_results.png"
+        fig.savefig(fig_file)
+        sub_results["fig_file"] = str(fig_file)
         logger.info("Training final model with best configuration...")
+
         # Train final model with best configuration
         final_trainer = IMDBTrainer(best_config)
         final_model, test_metrics = final_trainer.train(

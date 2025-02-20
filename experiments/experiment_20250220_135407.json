@@ -1,0 +1,19 @@
+{
+    "timestamp": "20250220_135407",
+    "config": {
+        "learning_rate": 0.0005,
+        "batch_size": 64,
+        "epochs": 5,
+        "hidden_size1": 256,
+        "hidden_size2": 512,
+        "optimizer": "sgd",
+        "activation": "tanh",
+        "random_seed": 1
+    },
+    "results": {
+        "val_loss": 0.7346219420433044,
+        "val_accuracy": 0.6032,
+        "val_precision": 0.5872323552735924,
+        "val_recall": 0.610973597359736
+    }
+}

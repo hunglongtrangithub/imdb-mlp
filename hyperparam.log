@@ -1,0 +1,200 @@
+2025-02-20 13:19:56.173 | INFO     | __main__:main:199 - Search space: {'learning_rate': [0.001, 0.0005, 0.0001], 'batch_size': [32, 64, 128], 'epochs': [5, 10], 'hidden_size1': [128, 256, 512], 'hidden_size2': [128, 256, 512], 'optimizer': ['adam', 'sgd', 'rmsprop'], 'activation': ['relu', 'tanh', 'leaky_relu']}
+2025-02-20 13:19:56.174 | INFO     | __main__:main:201 - Token level: char_level
+2025-02-20 13:20:05.812 | DEBUG    | __main__:main:213 - test_labels: [1 1 0 ... 0 1 1]
+2025-02-20 13:20:05.813 | INFO     | __main__:main:214 - Preprocessing data...
+2025-02-20 13:20:18.929 | INFO     | __main__:main:226 - Data preprocessed. Starting hyperparameter optimization: random search
+2025-02-20 13:20:18.931 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 0}
+2025-02-20 13:20:18.932 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:20:18.933 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:20:38.706 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 1}
+2025-02-20 13:20:38.707 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:20:38.708 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:20:58.300 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 2}
+2025-02-20 13:20:58.300 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:20:58.301 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:21:17.896 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:21:17.896 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:21:17.897 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:22:16.575 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:22:16.576 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:22:16.577 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:23:15.013 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:23:15.014 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:23:15.015 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:24:13.442 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:24:13.442 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:24:13.444 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:25:12.099 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:25:12.099 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:25:12.100 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:26:10.564 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:26:10.564 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:26:10.565 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:27:09.070 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:27:09.071 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:27:09.072 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:28:07.641 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:28:07.642 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:28:07.643 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:29:06.304 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:29:06.304 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:29:06.305 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:30:04.947 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:30:04.948 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:30:04.949 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:31:03.570 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:31:03.571 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:31:03.572 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:32:02.240 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:32:02.240 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:32:02.242 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:33:00.765 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:33:00.766 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:33:00.767 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:33:59.581 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:33:59.582 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:33:59.584 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:34:58.010 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:34:58.010 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:34:58.012 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:35:56.523 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:35:56.523 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:35:56.525 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:36:55.213 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:36:55.213 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:36:55.215 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:37:53.777 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:37:53.778 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:37:53.779 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:38:52.367 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:38:52.367 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:38:52.369 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:39:50.938 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:39:50.938 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:39:50.940 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:40:49.437 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:40:49.437 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:40:49.439 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:41:47.778 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:41:47.779 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:41:47.780 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:42:46.244 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:42:46.244 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:42:46.246 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:43:45.151 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:43:45.151 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:43:45.152 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:44:43.659 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:44:43.660 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:44:43.661 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:45:42.103 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:45:42.104 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:45:42.105 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:46:40.466 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 13:46:40.467 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:46:40.468 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:47:38.948 | INFO     | __main__:main:240 - Random search completed.
+2025-02-20 13:47:38.962 | INFO     | __main__:get_best_config:132 - Best configuration: {'learning_rate': np.float64(0.001), 'batch_size': np.int64(32), 'epochs': np.int64(5), 'hidden_size1': np.int64(256), 'hidden_size2': np.int64(128), 'optimizer': 'rmsprop', 'activation': 'leaky_relu'}
+2025-02-20 13:47:39.426 | INFO     | __main__:main:262 - Training final model with best configuration...
+2025-02-20 13:47:39.431 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 134, <class 'int'>
+2025-02-20 13:47:39.431 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 134, <class 'int'>. self.size_hidden1: 256, <class 'numpy.int64'>
+2025-02-20 13:48:37.883 | INFO     | __main__:main:201 - Token level: word_level
+2025-02-20 13:48:45.501 | DEBUG    | __main__:main:213 - test_labels: [1 1 0 ... 0 1 1]
+2025-02-20 13:48:45.501 | INFO     | __main__:main:214 - Preprocessing data...
+2025-02-20 13:49:00.775 | INFO     | __main__:main:226 - Data preprocessed. Starting hyperparameter optimization: random search
+2025-02-20 13:49:00.778 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 0}
+2025-02-20 13:49:00.779 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 13:49:00.780 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:51:53.610 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 1}
+2025-02-20 13:51:53.612 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 13:51:53.612 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:54:07.609 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.0005, 'batch_size': 64, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 512, 'optimizer': 'sgd', 'activation': 'tanh', 'random_seed': 2}
+2025-02-20 13:54:07.611 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 13:54:07.612 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:56:22.863 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 13:56:22.864 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 13:56:22.865 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 13:58:14.997 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 13:58:14.998 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 13:58:14.999 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:00:01.836 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:00:01.837 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:00:01.838 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:01:49.054 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:01:49.056 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:01:49.056 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:03:36.058 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:03:36.060 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:03:36.060 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:05:23.043 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:05:23.045 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:05:23.046 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:07:15.228 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:07:15.230 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:07:15.230 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:09:02.495 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:09:02.497 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:09:02.497 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:10:49.897 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:10:49.899 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:10:49.899 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:12:37.728 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:12:37.730 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:12:37.730 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:14:25.843 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:14:25.845 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:14:25.845 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:16:18.690 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:16:18.692 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:16:18.692 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:18:12.030 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:18:12.032 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:18:12.032 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:20:04.651 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:20:04.653 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:20:04.653 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:21:52.606 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:21:52.607 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:21:52.608 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:23:40.105 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:23:40.107 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:23:40.108 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:25:27.267 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:25:27.269 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:25:27.269 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:27:15.821 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:27:15.823 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:27:15.823 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:29:02.439 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:29:02.441 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:29:02.441 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:30:49.924 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:30:49.925 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:30:49.926 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:32:37.989 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:32:37.990 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:32:37.991 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:34:25.008 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:34:25.010 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:34:25.011 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:36:12.003 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:36:12.005 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:36:12.005 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:38:05.513 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:38:05.514 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:38:05.515 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:39:52.441 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 0}
+2025-02-20 14:39:52.443 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:39:52.443 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:41:38.800 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 1}
+2025-02-20 14:41:38.802 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:41:38.802 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:43:32.524 | INFO     | __main__:_run_experiment:101 - Running experiment with config: {'learning_rate': 0.001, 'batch_size': 32, 'epochs': 5, 'hidden_size1': 256, 'hidden_size2': 128, 'optimizer': 'rmsprop', 'activation': 'leaky_relu', 'random_seed': 2}
+2025-02-20 14:43:32.526 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:43:32.526 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'int'>
+2025-02-20 14:45:20.287 | INFO     | __main__:main:240 - Random search completed.
+2025-02-20 14:45:20.300 | INFO     | __main__:get_best_config:132 - Best configuration: {'learning_rate': np.float64(0.001), 'batch_size': np.int64(32), 'epochs': np.int64(5), 'hidden_size1': np.int64(256), 'hidden_size2': np.int64(128), 'optimizer': 'rmsprop', 'activation': 'leaky_relu'}
+2025-02-20 14:45:20.692 | INFO     | __main__:main:262 - Training final model with best configuration...
+2025-02-20 14:45:20.697 | DEBUG    | src.modeling.trainer:train:173 - X_train.shape[1]: 80169, <class 'int'>
+2025-02-20 14:45:20.697 | DEBUG    | src.modeling.models.mlp:__init__:39 - self.size_input: 80169, <class 'int'>. self.size_hidden1: 256, <class 'numpy.int64'>
+2025-02-20 14:47:19.463 | INFO     | __main__:main:278 - Saving results to file...

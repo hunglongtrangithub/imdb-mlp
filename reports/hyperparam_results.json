@@ -37,48 +37,52 @@
     },
     "char_level": {
         "best_config": {
-            "learning_rate": 0.0005,
-            "batch_size": 64,
+            "learning_rate": 0.001,
+            "batch_size": 32,
             "epochs": 5,
             "hidden_size1": 256,
-            "hidden_size2": 512,
-            "optimizer": "sgd",
-            "activation": "tanh",
+            "hidden_size2": 128,
+            "optimizer": "rmsprop",
+            "activation": "leaky_relu",
             "random_seed": 0
         },
         "best_stats": {
-            "val_accuracy_mean": 0.5787333333333333,
-            "val_accuracy_std": 0.008043216603656382,
-            "val_accuracy_trials": 3
+            "val_accuracy_mean": 0.5964666666666667,
+            "val_accuracy_std": 0.013788289345561451,
+            "val_accuracy_trials": 27
         },
+        "results_file": "/home/80026129/PROJECTS/learning/NLP_01/reports/hyperparam_results.csv",
+        "fig_file": "/home/80026129/PROJECTS/learning/NLP_01/reports/figures/hyperparam_results.png",
         "test_metrics": {
-            "loss": 0.6751224994659424,
-            "accuracy": 0.5752,
-            "precision": 0.5937749401436552,
-            "recall": 0.47616
+            "loss": 0.6742381453514099,
+            "accuracy": 0.56792,
+            "precision": 0.6702767749699158,
+            "recall": 0.26736
         }
     },
     "word_level": {
         "best_config": {
-            "learning_rate": 0.0005,
-            "batch_size": 64,
+            "learning_rate": 0.001,
+            "batch_size": 32,
             "epochs": 5,
             "hidden_size1": 256,
-            "hidden_size2": 512,
-            "optimizer": "sgd",
-            "activation": "tanh",
+            "hidden_size2": 128,
+            "optimizer": "rmsprop",
+            "activation": "leaky_relu",
             "random_seed": 0
         },
         "best_stats": {
-            "val_accuracy_mean": 0.6085333333333334,
-            "val_accuracy_std": 0.010653324989567052,
-            "val_accuracy_trials": 3
+            "val_accuracy_mean": 0.8732,
+            "val_accuracy_std": 0.0015874507866387633,
+            "val_accuracy_trials": 27
         },
+        "results_file": "/home/80026129/PROJECTS/learning/NLP_01/reports/hyperparam_results.csv",
+        "fig_file": "/home/80026129/PROJECTS/learning/NLP_01/reports/figures/hyperparam_results.png",
         "test_metrics": {
-            "loss": 0.7096644043922424,
-            "accuracy": 0.61884,
-            "precision": 0.6192693697310317,
-            "recall": 0.61704
+            "loss": 0.8503208756446838,
+            "accuracy": 0.8632,
+            "precision": 0.8674328261573324,
+            "recall": 0.85744
         }
     }
 }
